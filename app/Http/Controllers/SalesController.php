@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\SalesService;
+use App\Services\VehicleService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -10,10 +11,12 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class SalesController extends Controller
 {
     private $salesService;
+    private $vehicleService;
 
-    public function __construct(SalesService $salesService)
+    public function __construct(SalesService $salesService, VehicleService $vehicleService)
     {
         $this->salesService = $salesService;
+        $this->vehicleService = $vehicleService;
     }
 
     /**
@@ -24,25 +27,52 @@ class SalesController extends Controller
      */
     public function createSales(Request $request): JsonResponse
     {
-        
+
         try {
-            $data = $request->validate([
+            $request->validate([
                 'nama_customer' => 'required|string',
                 'jumlah' => 'required|numeric',
                 'tipe' => 'required|in:Motor,Mobil',
-                'item_id' => 'required|string', // or 'motor_id' depending on the property name
+                'item_id' => 'required|string',
             ]);
 
-            $sales = $this->salesService->createSales($data);
+            $itemTipe = $request->input('tipe');
+            $itemId = $request->input('item_id');
+            $jumlah = $request->input('jumlah');
+
+            // Get the selected vehicle item
+            if ($itemTipe === 'Mobil') {
+                $item = $this->vehicleService->getCarById($itemId);
+            } else {
+                $item = $this->vehicleService->getMotorById($itemId);
+            }
+            
+            // Check the stock availability
+            if ($item->stok > 0) {
+                if ($jumlah > $item->stok) {
+                    throw new \Exception('Insufficient stock. Available stock: ' . $item->stok);
+                }
+            } else {
+                throw new \Exception('Out of stock');
+            }
+
+            $data = $request->only(['nama_customer', 'jumlah', 'tipe', 'tipe', 'item_id']);
+            $sales = $this->salesService->createSales($data, $item);
 
             return response()->json(['data' => $sales], 201);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Item not found'], 404);
         } catch (\Exception $e) {
             // Handle the exception and return an error response
-            return response()->json(['error' => $e->getMessage()], 500);
+            if ($e->getMessage() === 'Out of stock' || strpos($e->getMessage(), 'Insufficient stock.') === 0) {
+                return response()->json(['error' => $e->getMessage()], 400);
+            } else {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
         }
     }
-    
-     /**
+
+    /**
      * Get all Sales Report.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -58,7 +88,7 @@ class SalesController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-    
+
     /**
      * Get a specific sales by ID.
      *
