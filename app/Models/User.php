@@ -2,15 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Jenssegers\Mongodb\Auth\User as Authenticatable;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+/**
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property \DateTime|null $email_verified_at
+ * @property \DateTime|null $created_at
+ * @property \DateTime|null $updated_at
+ * @property \DateTime|null $deleted_at
+ */
+class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use SoftDeletes;
+
+    protected $connection = 'mongodb';
+    protected $collection = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -41,4 +51,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getJWTIdentifier(): mixed
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims(): array
+    {
+        return [];
+    }
 }
