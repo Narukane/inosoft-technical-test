@@ -44,7 +44,7 @@ class VehiclesController extends Controller
             $carData = $request->only(['tahun_keluaran', 'warna', 'harga', 'tipe', 'stok', 'detail']);
             $car = $this->vehicleService->createCar($carData);
 
-            return response()->json(['car' => $car], 201);
+            return response()->json(['data' => $car], 201);
         } catch (\Exception $e) {
             // Handle the exception and return an error response
             return response()->json(['error' => $e->getMessage()], 500);
@@ -117,7 +117,7 @@ class VehiclesController extends Controller
             $carData = $request->only(['tahun_keluaran', 'warna', 'harga', 'tipe', 'stok', 'detail']);
             $updatedCar = $this->vehicleService->updateCar($car, $carData);
 
-            return response()->json(['car' => $updatedCar], 200);
+            return response()->json(['data' => $updatedCar], 200);
         } catch (\Exception $e) {
             // Handle the exception and return an error response
             return response()->json(['error' => $e->getMessage()], 500);
@@ -168,7 +168,7 @@ class VehiclesController extends Controller
             $motorData = $request->only(['tahun_keluaran', 'warna', 'harga', 'tipe', 'stok', 'detail']);
             $motor = $this->vehicleService->createMotor($motorData);
 
-            return response()->json(['motor' => $motor], 201);
+            return response()->json(['data' => $motor], 201);
         } catch (\Exception $e) {
             // Handle the exception and return an error response
             return response()->json(['error' => $e->getMessage()], 500);
@@ -237,7 +237,7 @@ class VehiclesController extends Controller
             $motorData = $request->only(['tahun_keluaran', 'warna', 'harga', 'tipe', 'stok', 'detail']);
             $updatedMotor = $this->vehicleService->updateMotor($motor, $motorData);
 
-            return response()->json(['motor' => $updatedMotor], 200);
+            return response()->json(['data' => $updatedMotor], 200);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Motor not found'], 404);
         } catch (\Exception $e) {
