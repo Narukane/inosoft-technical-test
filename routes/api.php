@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehiclesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Tymon\JWTAuth\Facades\JWTAuth;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [UserController::class, 'login']);
+
+// Protected routes
+Route::group(['middleware' => 'jwt.auth'], function () {
+    // Car routes
+    Route::post('/cars', [VehiclesController::class, 'createCar']);
+
+    // Motor routes
+    Route::post('/motors', [VehiclesController::class, 'createMotor']);
+});
