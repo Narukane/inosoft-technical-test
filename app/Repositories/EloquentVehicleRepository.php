@@ -63,4 +63,18 @@ class EloquentVehicleRepository implements VehicleRepositoryInterface
         Motor::findOrFail($motorId)->delete();
     }
     // End of Motor Functions
+    
+    // Start of Sales Functions
+    public function decreaseStock(string $itemTipe, string $itemId, int $jumlah): bool
+    {
+        $item = $itemTipe === 'Mobil' ? Car::find($itemId) : Motor::find($itemId);
+
+        if ($item) {
+            $item->decrement('stok', $jumlah);
+            return true;
+        }
+
+        return false;
+    }
+    // End of Sales Functions
 }

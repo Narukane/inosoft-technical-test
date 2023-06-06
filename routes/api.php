@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehiclesController;
+use App\Http\Controllers\SalesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -33,4 +34,9 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('/motors/{motorId}', [VehiclesController::class, 'getMotorById']);
     Route::put('/motors/{motorId}', [VehiclesController::class, 'updateMotor']);
     Route::delete('/motors/{motorId}', [VehiclesController::class, 'deleteMotor']);
+    
+    // Sales routes
+    Route::post('/sales', [SalesController::class, 'createSales']);
+    Route::get('/sales', [SalesController::class, 'getAllSales']);
+    Route::get('/sales/{salesId}', [SalesController::class, 'getSalesById']);
 });

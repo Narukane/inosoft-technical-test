@@ -24,4 +24,7 @@ interface VehicleRepositoryInterface
     public function updateMotor(Motor $motor,array $motorData): Motor;
     public function deleteMotor(string $motorId): void;
     // End of Motor Functions
+    
+    // Start of Sales Functions
+    public function decreaseStock(string $itemTipe,string $itemId,int $jumlah): bool;
 }
