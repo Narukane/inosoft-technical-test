@@ -1,0 +1,507 @@
+{
+	"info": {
+		"_postman_id": "9fb2665c-f3ec-4c07-97ed-3928d8c12631",
+		"name": "Inosoft",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7674567"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"dummy\",\r\n    \"email\": \"dummy@mail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"TOKEN\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"dummy@mail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vehicles CRUD",
+			"item": [
+				{
+					"name": "Create Car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_keluaran\" : 2010,\r\n    \"warna\" : \"kuning\",\r\n    \"harga\" : 100000,\r\n    \"stok\" : 5,\r\n    \"detail\" : {\r\n        \"mesin\" : \"dummy\",\r\n        \"kapasitas_penumpang\" : 5,\r\n        \"tipe\" : \"mini bus\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/cars",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET All Cars",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/cars",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Cars By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/cars/647f3587265c502f4e0a7c82",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								"647f3587265c502f4e0a7c82"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_keluaran\" : 2023,\r\n    \"warna\" : \"merah\",\r\n    \"harga\" : 100000,\r\n    \"stok\" : 10,\r\n    \"detail\" : {\r\n        \"mesin\" : \"dummy mesin\",\r\n        \"kapasitas_penumpang\" : 5,\r\n        \"tipe\" : \"sedan\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/cars/647f3587265c502f4e0a7c82",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								"647f3587265c502f4e0a7c82"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Car",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/cars/647fefa403f0fcb75f011522",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								"647fefa403f0fcb75f011522"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Motor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_keluaran\" : 2010,\r\n    \"warna\" : \"kuning\",\r\n    \"harga\" : 100000,\r\n    \"stok\" : 5,\r\n    \"detail\" : {\r\n        \"mesin\" : \"dummy\",\r\n        \"tipe_suspensi\" : \"dummy\",\r\n        \"tipe_transmisi\" : \"manual\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/motors",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"motors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET All Motor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/motors",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"motors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Motor By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/motors/647ef7c21ca843dad902f344",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"motors",
+								"647ef7c21ca843dad902f344"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Motor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tahun_keluaran\" : 2020,\r\n    \"warna\" : \"hijau\",\r\n    \"harga\" : 100000,\r\n    \"stok\" : 5,\r\n    \"detail\" : {\r\n        \"mesin\" : \"dummy\",\r\n        \"tipe_suspensi\" : \"dummy\",\r\n        \"tipe_transmisi\" : \"manual\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/motors/647ef7c21ca843dad902f344",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"motors",
+								"647ef7c21ca843dad902f344"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Motors",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/motors/647ef7c21ca843dad902f344",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"motors",
+								"647ef7c21ca843dad902f344"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sales",
+			"item": [
+				{
+					"name": "Create Sales",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama_customer\" : \"Fatahillah\",\r\n    \"jumlah\" : 1,\r\n    \"tipe\": \"Mobil\",\r\n    \"item_id\": \"647f3587265c502f4e0a7c82\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/sales",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Report Sales",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/sales",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"sales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Report Sales By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/sales/647f42201edee3e4a104ce42",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"sales",
+								"647f42201edee3e4a104ce42"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
