@@ -8,7 +8,7 @@ Fitur Fitur yang tersedia
 harga, stok, dan detail kendaraan.
 - Pencarian kendaraan: Pengguna dapat melakukan pencarian kendaraan
 - Melihat semua kendaraan: Pengguna dapat melihat informasi terkait kendaraan yang tersedia
-- Melakukan penjulan: Pengguna dapat melakukan penjulan dengan memberikan informasi pelanggan, jumlah, dan tipe kendaraan
+- Melakukan penjualan: Pengguna dapat melakukan penjulan dengan memberikan informasi pelanggan, jumlah, dan tipe kendaraan
 - Laporan penjualan: Pengguna dapat melihat laporan penjualan kendaraan yang telah terjadi
 
 ## Persyaratan Sistem
