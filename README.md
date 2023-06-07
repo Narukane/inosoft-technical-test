@@ -28,7 +28,7 @@ git clone git@github.com:Narukane/inosoft-technical-test.git
 cd inosoft-technical-test
 ```
 
-3. Edit file `.env` dan `.env.testing` sesui environment yang ada:
+3. Edit file `.env` dan `.env.testing` sesuai environment yang ada:
 ```bash
 DB_CONNECTION=mongodb
 DB_HOST=127.0.0.1
