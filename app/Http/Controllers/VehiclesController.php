@@ -99,10 +99,6 @@ class VehiclesController extends Controller
         try {
             $car = $this->vehicleService->getCarById($carId);
 
-            if (!$car) {
-                return response()->json(['error' => 'Car not found'], 404);
-            }
-
             $request->validate([
                 'tahun_keluaran' => 'required|digits:4|integer|min:1900|max:' . (date('Y') + 1),
                 'warna' => 'required',
@@ -118,6 +114,8 @@ class VehiclesController extends Controller
             $updatedCar = $this->vehicleService->updateCar($car, $carData);
 
             return response()->json(['data' => $updatedCar], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Car not found'], 404);
         } catch (\Exception $e) {
             // Handle the exception and return an error response
             return response()->json(['error' => $e->getMessage()], 500);
