@@ -63,7 +63,7 @@ php artisan route:list
 ```
 
 ## Testing
-Untuk menjalankan test perludipastikan untuk `.env.testing` sudah sesuai dengan environment yang ada
+Untuk menjalankan test perlu dipastikan untuk `.env.testing` sudah sesuai dengan environment yang ada
 
 Command melakukan test:
 ```bash
